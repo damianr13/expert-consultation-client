@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as fromStore from '@app/core/store';
 import { Router } from '@angular/router';
+import { Page, User } from '@app/core';
 
 @Component({
   selector: 'app-file-uploader',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class FileUploaderComponent {
   @Input() public url = '';
+  @Output() uploadFinished: EventEmitter<any> = new EventEmitter();
 
   completed$: Observable<boolean> = this.store$.pipe(select(fromStore.selectUploadFileCompleted));
   progress$: Observable<number> = this.store$.pipe(select(fromStore.selectUploadFileProgress));
@@ -19,18 +21,15 @@ export class FileUploaderComponent {
   isReady$: Observable<boolean> = this.store$.pipe(select(fromStore.selectUploadFileReady));
   hasFailed$: Observable<boolean> = this.store$.pipe(select(fromStore.selectUploadFileFailed));
 
-  constructor(private store$: Store<fromStore.State>,
-              private router: Router) {
-    this.completed$.subscribe(completed => {
-      if (!completed) {
+  private isUploadStarted = false;
+
+  constructor(private store$: Store<fromStore.State>) {
+    this.store$.pipe(select(fromStore.selectResult)).subscribe(result => {
+      if (!this.isUploadStarted) {
         return ;
       }
-
-      this.router.navigate(['/users'])
-          .then(r => {
-            this.store$.dispatch(new fromStore.LoadUsers());
-            this.store$.dispatch(new fromStore.UploadResetAction());
-          });
+      this.isUploadStarted = false;
+      this.uploadFinished.emit(result);
     });
   }
 
@@ -43,6 +42,7 @@ export class FileUploaderComponent {
         file, url
       })
     );
+    this.isUploadStarted = true;
 
     // clear the input form
     event.srcElement.value = null;

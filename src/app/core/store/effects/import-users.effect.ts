@@ -26,7 +26,8 @@ export class ImportUsersEffects {
 
   @Effect({dispatch: false})
   successfulImportSave$ = this.actions$.pipe(
-    ofType(importUsersActions.ImportUserActionTypes.ImportedUsersSaveSuccess),
+    ofType(importUsersActions.ImportUserActionTypes.ImportedUsersSaveSuccess,
+        importUsersActions.ImportUserActionTypes.ImportFromCsvSuccess),
     take(1),
     tap(() => this.router.navigate(['/users'])),
   );

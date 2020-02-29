@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as fromStore from '@app/core/store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-file-uploader',
@@ -18,7 +19,19 @@ export class FileUploaderComponent {
   isReady$: Observable<boolean> = this.store$.pipe(select(fromStore.selectUploadFileReady));
   hasFailed$: Observable<boolean> = this.store$.pipe(select(fromStore.selectUploadFileFailed));
 
-  constructor(private store$: Store<fromStore.State>) {
+  constructor(private store$: Store<fromStore.State>,
+              private router: Router) {
+    this.completed$.subscribe(completed => {
+      if (!completed) {
+        return ;
+      }
+
+      this.router.navigate(['/users'])
+          .then(r => {
+            this.store$.dispatch(new fromStore.LoadUsers());
+            this.store$.dispatch(new fromStore.UploadResetAction());
+          });
+    });
   }
 
   uploadFile(event: any) {

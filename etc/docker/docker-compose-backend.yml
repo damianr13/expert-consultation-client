@@ -8,8 +8,9 @@ services:
     environment:
       MYSQL_DATABASE: 'legalconsultation'
       MYSQL_ROOT_PASSWORD: 'root'
-    expose:
-      - "3306"
+    ports:
+      - "3306:3306"
+      - "33060:33060"
     volumes:
       - mysql-vol:/var/lib/mysql
   mailhog:

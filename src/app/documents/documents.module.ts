@@ -8,16 +8,22 @@ import * as fromComponents from './components';
 import * as fromContainer from './containers';
 import * as fromGuards from './guards';
 import { CommonModule } from '@angular/common';
+import { DocumentOverviewComponent } from './containers/document-overview/document-overview.component';
+import { DocumentUsersAssignerComponent } from './components/document-users-assigner/document-users-assigner.component';
+import { UsersModule } from '@app/users/users.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     DocumentsRoutingModule,
+    UsersModule,
   ],
   declarations: [
     ...fromContainer.components,
     ...fromComponents.components,
+    DocumentOverviewComponent,
+    DocumentUsersAssignerComponent,
   ],
   providers: [
     ...fromGuards.guards,

@@ -1,0 +1,8 @@
+<app-users-table class="full-width"
+  [users]="users$ | async"
+  [pageData]="usersPageData$ | async"
+  [loading]="usersLoaded$ | async"
+  [filter]="filter$ | async"
+  (filterChange)="onFilterChange($event)">
+
+</app-users-table>

@@ -18,6 +18,13 @@ const routes: Routes = [
   {
     path: 'add',
     component: fromContainers.AddDocumentComponent,
+  },
+  {
+    path: ':documentId',
+    component: fromContainers.DocumentOverviewComponent,
+    canActivate: [
+        DocumentsGuard,
+    ],
   }
 ];
 

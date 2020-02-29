@@ -1,0 +1,42 @@
+<div *ngIf="document$ | async as document" class="document-container">
+  <div class="title-line">
+    <mat-icon class="item-arrow">play_arrow</mat-icon>
+    <p class="title">{{document.documentTitle}}</p>
+  </div>
+
+  <div class="line"></div>
+
+  <div class="details-container">
+    <div class="label-value-area">
+    <span class="label-value-row">
+      <p class="label">INITIATOR</p>
+      <p>{{document.documentInitializer}}</p>
+    </span>
+      <span class="label-value-row">
+      <p class="label">DATA ELABORARII</p>
+      <p>{{document.dateOfDevelopment | date}}</p>
+    </span>
+      <span class="label-value-row">
+      <p class="label">TIP DOCUMENT</p>
+      <p>{{document.documentType}}</p>
+    </span>
+      <span class="label-value-row">
+      <p class="label">STATUS</p>
+      <p>???</p>
+    </span>
+    </div>
+
+    <div class="buttons-container">
+      <div class="buttons-wrapper-helper">
+        <div class="button-wrapper">
+          <button mat-flat-button>Vezi document</button>
+        </div>
+        <div class="button-wrapper">
+          <button mat-flat-button>Adauga membri</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-document-users-assigner class="users-table-container"></app-document-users-assigner>
+</div>

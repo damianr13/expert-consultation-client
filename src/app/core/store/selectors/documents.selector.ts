@@ -1,4 +1,4 @@
-import { createSelector } from '@ngrx/store';
+import { createSelector, MemoizedSelector } from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import * as fromDocuments from '../reducers/documents.reducer';
 import { DocumentMetadata, IDocumentMetadata, IPageData, PageData } from '../../models';
@@ -32,3 +32,11 @@ export const getDocuments = createSelector(getDocumentsEntities,
 );
 export const getDocumentsLoaded = createSelector(getDocumentsState, fromDocuments.getDocumentsLoaded);
 export const getDocumentsLoading = createSelector(getDocumentsState, fromDocuments.getDocumentsLoading);
+
+export const getDocumentById = (id) => createSelector(getDocuments, (allDocuments: IDocumentMetadata[]) => {
+  if (allDocuments.length === 0) {
+    return undefined;
+  }
+
+  return allDocuments.find(document => document.id === id);
+});

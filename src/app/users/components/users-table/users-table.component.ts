@@ -21,7 +21,7 @@ export class UsersTableComponent extends BaseComponent implements OnInit, AfterV
 
   @Output() filterChange: EventEmitter<Filter> = new EventEmitter();
 
-  public tableConfig: any = {};
+  @Input() public tableConfig: any = {};
 
   ngOnInit(): void {
     this.tableConfig = {

@@ -11,7 +11,7 @@ export class DocumentsApiService {
   }
 
   private get url() {
-    return `${environment.api_url}/document`;
+    return `${environment.api_url}/documents`;
   }
 
   public list(): Observable<Page<IDocumentMetadata>> {

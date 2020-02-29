@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as documentsActions from '../actions';
-import { catchError, concatMap, map, switchMap } from 'rxjs/operators';
+import { catchError, concatMap, map, switchMap, take, tap } from 'rxjs/operators';
 import { DocumentsService } from '../../services';
 import { Error, Page } from '@app/core';
 import { of } from 'rxjs';
 import { DocumentConsolidate, DocumentMetadata } from '../../models/';
 import { CoreState } from '@app/core/store';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class DocumentsEffect {
@@ -34,9 +35,17 @@ export class DocumentsEffect {
       })
   );
 
+  @Effect()
+  saveDocumentSuccess$ = this.actions$.pipe(
+    ofType(documentsActions.DocumentsActionTypes.SaveDocumentSuccess),
+    take(1),
+    tap(() => this.router.navigate(['/documents'])),
+  );
+
   constructor(private store$: Store<CoreState>,
               private actions$: Actions,
-              private documentsService: DocumentsService) {
+              private documentsService: DocumentsService,
+              private router: Router) {
   }
 
   private mapError(payload: any): Error {

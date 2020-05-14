@@ -121,11 +121,14 @@
       "download": "Descarcă document",
       "search": "Caută în document",
       "section": {
+        "content": "Conţinut",
         "type": {
           "document": "Document",
           "chapter": "Capitolul",
           "section": "Secțiunea",
-          "article": "Art."
+          "article": "Art.",
+          "paragraph": "Paragraful",
+          "alignment": "Aliniatul"
         }
       }
     },

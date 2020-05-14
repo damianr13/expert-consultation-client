@@ -4,11 +4,21 @@
     <div [ngSwitch]="documentNode.documentNodeType">
       <div *ngSwitchCase="documentNodeTypeEnum.CHAPTER">
         <div [id]="documentNode.id" class="chapter">
-          <b>
-            {{'document.view.section.type.chapter' | translate |uppercase }}
-            {{documentNode.identifier + ': ' + documentNode.title}}
-          </b>
-          <p>{{documentNode.content}}</p>
+          <app-document-viewer-editor
+              label="{{'document.view.section.type.chapter' | translate | uppercase}} {{documentNode.identifier}}"
+              [(ngModel)]="documentNode.title">
+            <b class="viewer">
+              {{'document.view.section.type.chapter' | translate |uppercase }}
+              {{documentNode.identifier + ': ' + documentNode.title}}
+            </b>
+          </app-document-viewer-editor>
+          <app-document-viewer-editor
+              label="{{'document.view.section.type.chapter' | translate | uppercase}}
+                {{documentNode.identifier}} -
+                {{'document.view.section.content' | translate }}"
+              [(ngModel)]="documentNode.content">
+            <p class="viewer">{{documentNode.content}}</p>
+          </app-document-viewer-editor>
         </div>
         <app-document-content [documentNodes]="documentNode.children"
                               [addCommentModeForNode]="addCommentModeForNode"
@@ -17,11 +27,21 @@
       </div>
       <div *ngSwitchCase=" documentNodeTypeEnum.SECTION">
         <div [id]="documentNode.id">
-          <b>
-            {{'document.view.section.type.section' | translate |uppercase }}
-            {{documentNode.identifier + ': ' + documentNode.title}}
-          </b>
-          <p>{{documentNode.content}}</p>
+          <app-document-viewer-editor
+            label="{{'document.view.section.type.section' | translate |uppercase }} {{documentNode.identifier}}"
+            [(ngModel)]="documentNode.title">
+            <b>
+              {{'document.view.section.type.section' | translate |uppercase }}
+              {{documentNode.identifier + ': ' + documentNode.title}}
+            </b>
+          </app-document-viewer-editor>
+          <app-document-viewer-editor
+            label="{{'document.view.section.type.section' | translate |uppercase }}
+              {{documentNode.identifier + ': ' + documentNode.title}} -
+              {{'document.view.section.content' | translate}}"
+            [(ngModel)]="documentNode.content">
+            <p>{{documentNode.content}}</p>
+          </app-document-viewer-editor>
         </div>
         <app-document-content [documentNodes]="documentNode.children"
                               [addCommentModeForNode]="addCommentModeForNode"
@@ -35,7 +55,11 @@
             {{'document.view.section.type.article' | translate}}
             {{documentNode.identifier}}
           </strong>
-          <p class="article">{{documentNode.content}}</p>
+          <app-document-viewer-editor
+            label="{{'document.view.section.type.article' | translate}} {{documentNode.identifier}}"
+            [(ngModel)]="documentNode.content">
+            <p class="article">{{documentNode.content}}</p>
+          </app-document-viewer-editor>
           <div class="comment-row">
             <a class="blue-link">{{documentNode.numberOfComments}} {{'comments.number'|translate}}</a>
             <a (click)="clickedAddComment(documentNode.id)"
@@ -49,11 +73,19 @@
                               [addCommentModeForNode]="addCommentModeForNode"></app-document-content>
       </div>
       <div *ngSwitchCase="documentNodeTypeEnum.PARAGRAPH">
-        <p class="paragraph">{{'(' + documentNode.identifier + ')' + documentNode.content}}</p>
+        <app-document-viewer-editor
+          label="{{'document.view.section.type.paragraph' | translate}} {{documentNode.identifier}}"
+          [(ngModel)]="documentNode.content">
+          <p class="paragraph">{{'(' + documentNode.identifier + ')' + documentNode.content}}</p>
+        </app-document-viewer-editor>
         <app-document-content [documentNodes]="documentNode.children"></app-document-content>
       </div>
       <div *ngSwitchCase="documentNodeTypeEnum.ALIGNMENT">
-        <p class="alignment">{{documentNode.identifier + ')' + documentNode.content}}</p>
+        <app-document-viewer-editor
+          label="{{'document.view.section.type.alignment' | translate}} {{documentNode.identifier}}"
+          [(ngModel)]="documentNode.content">
+          <p class="alignment">{{documentNode.identifier + ')' + documentNode.content}}</p>
+        </app-document-viewer-editor>
       </div>
     </div>
   </div>

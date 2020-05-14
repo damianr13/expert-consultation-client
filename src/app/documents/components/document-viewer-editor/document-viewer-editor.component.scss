@@ -1,0 +1,17 @@
+@import 'variables';
+
+.viewer-editor-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .viewer, .editor {
+    flex-grow: 1;
+    flex-basis: 50%;
+  }
+
+  .editor {
+    background-color: $legal-consult-table-accent;
+    padding: 1em;
+  }
+}

@@ -1,0 +1,15 @@
+<div class="viewer-editor-panel">
+  <div class="viewer">
+    <ng-content></ng-content>
+  </div>
+
+  <mat-form-field class="editor">
+    <mat-label>{{label}}</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="value"
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1">
+    </textarea>
+  </mat-form-field>
+</div>

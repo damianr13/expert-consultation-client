@@ -7,6 +7,7 @@ import * as fromContainer from './containers';
 import * as fromGuards from './guards';
 import { CommonModule } from '@angular/common';
 import { DocumentViewerEditorComponent } from './components/document-viewer-editor/document-viewer-editor.component';
+import { DocumentSectionEditorButtonsComponent } from './components/document-section-editor-buttons/document-section-editor-buttons.component';
 import { CommentsModule } from '@app/comments/comments.module';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { CommentsModule } from '@app/comments/comments.module';
     ...fromContainer.components,
     ...fromComponents.components,
     DocumentViewerEditorComponent,
+    DocumentSectionEditorButtonsComponent,
   ],
   providers: [
     ...fromGuards.guards,

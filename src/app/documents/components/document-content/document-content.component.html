@@ -5,37 +5,59 @@
       <div *ngSwitchCase="documentNodeTypeEnum.CHAPTER">
         <div [id]="documentNode.id" class="chapter">
           <app-document-viewer-editor
-              label="{{'document.view.section.type.chapter' | translate | uppercase}} {{documentNode.identifier}}"
-              [(ngModel)]="documentNode.title">
-            <b class="viewer">
+            [editing]="editing"
+            label="{{'document.view.section.type.chapter' | translate | uppercase}} {{documentNode.identifier}}"
+            [(ngModel)]="documentNode.title">
+            <b>
               {{'document.view.section.type.chapter' | translate |uppercase }}
               {{documentNode.identifier + ': ' + documentNode.title}}
             </b>
+
+            <app-document-section-editor-buttons
+              (addSectionEventEmitter)="addSectionEventEmitter.emit(documentNode)"
+              (addArticleEventEmitter)="addArticleEventEmitter.emit(documentNode)"
+              (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
+            ></app-document-section-editor-buttons>
           </app-document-viewer-editor>
           <app-document-viewer-editor
-              label="{{'document.view.section.type.chapter' | translate | uppercase}}
-                {{documentNode.identifier}} -
-                {{'document.view.section.content' | translate }}"
-              [(ngModel)]="documentNode.content">
-            <p class="viewer">{{documentNode.content}}</p>
+            [editing]="editing"
+            label="{{'document.view.section.type.chapter' | translate | uppercase}}
+              {{documentNode.identifier}} -
+              {{'document.view.section.content' | translate }}"
+            [(ngModel)]="documentNode.content">
+            <p>{{documentNode.content}}</p>
           </app-document-viewer-editor>
         </div>
-        <app-document-content [documentNodes]="documentNode.children"
-                              [addCommentModeForNode]="addCommentModeForNode"
-                              (toggleCommentAdding)="clickedAddComment($event)">
-        </app-document-content>
+        <app-document-content
+          (addChapterEventEmitter)="addChapterEventEmitter.emit($event)"
+          (addSectionEventEmitter)="addSectionEventEmitter.emit($event)"
+          (addArticleEventEmitter)="addArticleEventEmitter.emit($event)"
+          (addParagraphEventEmitter)="addParagraphEventEmitter.emit($event)"
+          (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit($event)"
+          (removeNodeEventEmitter)="removeNodeEventEmitter.emit($event)"
+          [editing]="editing"
+          [addCommentModeForNode]="addCommentModeForNode"
+          (toggleCommentAdding)="clickedAddComment($event)"
+          [documentNodes]="documentNode.children"></app-document-content>
       </div>
       <div *ngSwitchCase=" documentNodeTypeEnum.SECTION">
         <div [id]="documentNode.id">
           <app-document-viewer-editor
+            [editing]="editing"
             label="{{'document.view.section.type.section' | translate |uppercase }} {{documentNode.identifier}}"
             [(ngModel)]="documentNode.title">
             <b>
               {{'document.view.section.type.section' | translate |uppercase }}
               {{documentNode.identifier + ': ' + documentNode.title}}
             </b>
+
+            <app-document-section-editor-buttons
+              (addArticleEventEmitter)="addArticleEventEmitter.emit(documentNode)"
+              (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
+            ></app-document-section-editor-buttons>
           </app-document-viewer-editor>
           <app-document-viewer-editor
+            [editing]="editing"
             label="{{'document.view.section.type.section' | translate |uppercase }}
               {{documentNode.identifier + ': ' + documentNode.title}} -
               {{'document.view.section.content' | translate}}"
@@ -43,10 +65,17 @@
             <p>{{documentNode.content}}</p>
           </app-document-viewer-editor>
         </div>
-        <app-document-content [documentNodes]="documentNode.children"
-                              [addCommentModeForNode]="addCommentModeForNode"
-                              (toggleCommentAdding)="clickedAddComment($event)">
-        </app-document-content>
+        <app-document-content
+          (addChapterEventEmitter)="addChapterEventEmitter.emit($event)"
+          (addSectionEventEmitter)="addSectionEventEmitter.emit($event)"
+          (addArticleEventEmitter)="addArticleEventEmitter.emit($event)"
+          (addParagraphEventEmitter)="addParagraphEventEmitter.emit($event)"
+          (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit($event)"
+          (removeNodeEventEmitter)="removeNodeEventEmitter.emit($event)"
+          [editing]="editing"
+          [addCommentModeForNode]="addCommentModeForNode"
+          (toggleCommentAdding)="clickedAddComment($event)"
+          [documentNodes]="documentNode.children"></app-document-content>
       </div>
       <div *ngSwitchCase=" documentNodeTypeEnum.ARTICLE" class="article"
            [ngClass]="addCommentModeForNode.get(documentNode.id)?'comments-mode':''">
@@ -56,9 +85,15 @@
             {{documentNode.identifier}}
           </strong>
           <app-document-viewer-editor
+            [editing]="editing"
             label="{{'document.view.section.type.article' | translate}} {{documentNode.identifier}}"
             [(ngModel)]="documentNode.content">
             <p class="article">{{documentNode.content}}</p>
+
+            <app-document-section-editor-buttons
+              (addParagraphEventEmitter)="addParagraphEventEmitter.emit(documentNode)"
+              (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
+            ></app-document-section-editor-buttons>
           </app-document-viewer-editor>
           <div class="comment-row">
             <a class="blue-link">{{documentNode.numberOfComments}} {{'comments.number'|translate}}</a>
@@ -69,22 +104,49 @@
           <app-node-comments *ngIf="commentsEnabled(documentNode.id)"
                              [nodeId]="documentNode.id"></app-node-comments>
         </div>
-        <app-document-content [documentNodes]="documentNode.children"
-                              [addCommentModeForNode]="addCommentModeForNode"></app-document-content>
+        <app-document-content
+          (addChapterEventEmitter)="addChapterEventEmitter.emit($event)"
+          (addSectionEventEmitter)="addSectionEventEmitter.emit($event)"
+          (addArticleEventEmitter)="addArticleEventEmitter.emit($event)"
+          (addParagraphEventEmitter)="addParagraphEventEmitter.emit($event)"
+          (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit($event)"
+          (removeNodeEventEmitter)="removeNodeEventEmitter.emit($event)"
+          [editing]="editing"
+          [addCommentModeForNode]="addCommentModeForNode"
+          [documentNodes]="documentNode.children"></app-document-content>
       </div>
       <div *ngSwitchCase="documentNodeTypeEnum.PARAGRAPH">
         <app-document-viewer-editor
+          [editing]="editing"
           label="{{'document.view.section.type.paragraph' | translate}} {{documentNode.identifier}}"
           [(ngModel)]="documentNode.content">
           <p class="paragraph">{{'(' + documentNode.identifier + ')' + documentNode.content}}</p>
+
+          <app-document-section-editor-buttons
+            (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit(documentNode)"
+            (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
+          ></app-document-section-editor-buttons>
         </app-document-viewer-editor>
-        <app-document-content [documentNodes]="documentNode.children"></app-document-content>
+        <app-document-content
+          (addChapterEventEmitter)="addChapterEventEmitter.emit($event)"
+          (addSectionEventEmitter)="addSectionEventEmitter.emit($event)"
+          (addArticleEventEmitter)="addArticleEventEmitter.emit($event)"
+          (addParagraphEventEmitter)="addParagraphEventEmitter.emit($event)"
+          (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit($event)"
+          (removeNodeEventEmitter)="removeNodeEventEmitter.emit($event)"
+          [editing]="editing"
+          [documentNodes]="documentNode.children"></app-document-content>
       </div>
       <div *ngSwitchCase="documentNodeTypeEnum.ALIGNMENT">
         <app-document-viewer-editor
+          [editing]="editing"
           label="{{'document.view.section.type.alignment' | translate}} {{documentNode.identifier}}"
           [(ngModel)]="documentNode.content">
           <p class="alignment">{{documentNode.identifier + ')' + documentNode.content}}</p>
+
+          <app-document-section-editor-buttons
+            (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
+          ></app-document-section-editor-buttons>
         </app-document-viewer-editor>
       </div>
     </div>

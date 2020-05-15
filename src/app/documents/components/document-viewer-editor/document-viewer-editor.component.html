@@ -3,7 +3,7 @@
     <ng-content></ng-content>
   </div>
 
-  <mat-form-field class="editor">
+  <mat-form-field class="editor" *ngIf="editing">
     <mat-label>{{label}}</mat-label>
     <textarea
       matInput
@@ -12,4 +12,8 @@
       cdkAutosizeMinRows="1">
     </textarea>
   </mat-form-field>
+
+  <div class="buttons-panel" *ngIf="editing">
+    <ng-content select="app-document-section-editor-buttons"></ng-content>
+  </div>
 </div>

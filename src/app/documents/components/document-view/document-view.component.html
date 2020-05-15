@@ -27,8 +27,9 @@
             <div class="column"><span class="document-item-status">TEST</span></div>
           </div>
         </div>
-        <div class="column download-button-wrapper">
+        <div class="column document-buttons-wrapper">
           <button mat-button>{{'document.view.download' | translate}}</button>
+          <button mat-button (click)="triggerEditing()">{{'document.view.edit' | translate}}</button>
         </div>
       </div>
     </div>
@@ -40,9 +41,23 @@
     <div class="document-view-content column">
       <h2>{{documentNode.title}}</h2>
       <p>{{documentNode.content}}</p>
-      <app-document-content [documentNodes]="documentNode.children"
-                            [addCommentModeForNode]="addCommentModeForNode"
-                            (toggleCommentAdding)="clickedAddComment($event)"></app-document-content>
+      <app-document-content
+        (addSectionEventEmitter)="onAddSection($event)"
+        (addArticleEventEmitter)="onAddArticle($event)"
+        (addParagraphEventEmitter)="onAddParagraph($event)"
+        (addAlignmentEventEmitter)="onAddAlignment($event)"
+        (removeNodeEventEmitter)="onRemoveNode($event)"
+        [editing]="editing"
+        [addCommentModeForNode]="addCommentModeForNode"
+        (toggleCommentAdding)="clickedAddComment($event)"
+        [documentNodes]="documentNode.children"
+      ></app-document-content>
+
+      <ng-container *ngIf="editing">
+        <app-document-section-editor-buttons
+          (addChapterEventEmitter)="onAddChapter(documentNode)"
+        ></app-document-section-editor-buttons>
+      </ng-container>
     </div>
   </div>
 </div>

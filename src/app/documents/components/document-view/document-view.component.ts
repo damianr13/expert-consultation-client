@@ -14,6 +14,7 @@ export class DocumentViewComponent extends BaseComponent implements OnInit {
   @Output() toggleCommentAdding: EventEmitter<string> = new EventEmitter<string>();
   documentNode: DocumentNode;
   documentMetadata: DocumentMetadata;
+  editing = false;
 
   ngOnInit(): void {
     this.documentMetadata = this.document.documentMetadata;
@@ -24,4 +25,31 @@ export class DocumentViewComponent extends BaseComponent implements OnInit {
     this.toggleCommentAdding.emit(nodeId);
   }
 
+  triggerEditing() {
+    this.editing = !this.editing;
+  }
+
+  onAddChapter(parent: DocumentNode) {
+    console.log(`Adding chapter to ${parent.documentNodeType} ${parent.title}`);
+  }
+
+  onAddSection(parent: DocumentNode) {
+    console.log(`Adding section to ${parent.documentNodeType} ${parent.title}`);
+  }
+
+  onAddArticle(parent: DocumentNode) {
+    console.log(`Adding article to ${parent.documentNodeType} ${parent.title}`);
+  }
+
+  onAddParagraph(parent: DocumentNode) {
+    console.log(`Adding paragraph to ${parent.documentNodeType} ${parent.title}`);
+  }
+
+  onAddAlignment(parent: DocumentNode) {
+    console.log(`Adding alignment to ${parent.documentNodeType} ${parent.title}`);
+  }
+
+  onRemoveNode(target: DocumentNode) {
+    console.log(`Removing ${target.documentNodeType} ${target.title}`);
+  }
 }

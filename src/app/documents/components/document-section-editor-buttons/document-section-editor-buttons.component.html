@@ -1,0 +1,25 @@
+<div class="document-section-buttons-panel">
+  <button *ngIf="hasAddChapter" mat-raised-button class="add" (click)="this.addChapterEventEmitter.emit()">
+    <mat-icon>note_add</mat-icon> {{'document.edit.add.chapter' | translate}}
+  </button>
+
+  <button *ngIf="hasAddSection" mat-raised-button class="add" (click)="this.addSectionEventEmitter.emit()">
+    <mat-icon>note_add</mat-icon> {{'document.edit.add.section' | translate}}
+  </button>
+
+  <button *ngIf="hasAddArticle" mat-raised-button class="add" (click)="this.addArticleEventEmitter.emit()">
+    <mat-icon>note_add</mat-icon> {{'document.edit.add.article' | translate}}
+  </button>
+
+  <button *ngIf="hasAddParagraph" mat-raised-button class="add" (click)="this.addParagraphEventEmitter.emit()">
+    <mat-icon>note_add</mat-icon> {{'document.edit.add.paragraph' | translate}}
+  </button>
+
+  <button *ngIf="hasAddAlignment" mat-raised-button class="add" (click)="this.addAlignmentEventEmitter.emit()">
+    <mat-icon>note_add</mat-icon> {{'document.edit.add.alignment' | translate}}
+  </button>
+
+  <button *ngIf="hasRemoveCurrentNode" mat-raised-button class="remove" (click)="this.removeCurrentNodeEventEmitter.emit()">
+    <mat-icon>delete</mat-icon> {{'document.edit.remove' | translate}}
+  </button>
+</div>

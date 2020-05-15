@@ -119,6 +119,7 @@
       "type": "Tip document",
       "status": "Status",
       "download": "Descarcă document",
+      "edit": "Editează document",
       "search": "Caută în document",
       "section": {
         "content": "Conţinut",
@@ -131,6 +132,16 @@
           "alignment": "Aliniatul"
         }
       }
+    },
+    "edit": {
+      "add": {
+        "chapter": "Adaugă capitol",
+        "section": "Adaugă secţiune",
+        "article": "Adaugă articol",
+        "paragraph": "Adaugă paragraf",
+        "alignment": "Adaugă aliniat"
+      },
+      "remove": "Şterge"
     },
     "metadata": {
       "initiator": "Inițiator",

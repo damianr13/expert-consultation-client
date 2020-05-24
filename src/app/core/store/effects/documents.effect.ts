@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as documentsActions from '../actions';
 import { catchError, concatMap, map, switchMap, take, tap } from 'rxjs/operators';
-import { DocumentsService } from '../../services';
-import { Error, Page } from '@app/core';
+import { DocumentNodesService, DocumentsService } from '../../services';
+import { Error, IDocumentNode, IDocumentNodeCreateDto, Page } from '@app/core';
 import { of } from 'rxjs';
 import { DocumentConsolidate, DocumentMetadata } from '../../models/';
 import { CoreState } from '@app/core/store';
@@ -36,6 +36,17 @@ export class DocumentsEffect {
   );
 
   @Effect()
+  loadDocumentConsolidateByNodeId$ = this.actions$.pipe(
+      ofType(documentsActions.DocumentsActionTypes.LoadDocumentConsolidateByNodeId),
+      map((action: documentsActions.LoadDocumentConsolidateByNodeId) => action.payload),
+      concatMap((id: string) => this.documentsService.getByDocumentNodeId(id)
+          .pipe(
+              map((document: DocumentConsolidate) => new documentsActions.LoadDocumentConsolidateSuccess(document)),
+              catchError(error => of(new documentsActions.LoadDocumentConsolidateFail(error)))
+          ))
+  );
+
+  @Effect()
   saveDocument$ = this.actions$.pipe(
       ofType(documentsActions.DocumentsActionTypes.SaveDocument),
       map((action: documentsActions.SaveDocument) => action.payload),
@@ -55,9 +66,41 @@ export class DocumentsEffect {
       tap((id: string) => this.router.navigate(['documents', id, 'users'])),
   );
 
+  @Effect()
+  addDocumentNode$ = this.actions$.pipe(
+      ofType(documentsActions.DocumentsActionTypes.AddDocumentNode),
+      map((action: documentsActions.AddDocumentNode) => action.payload),
+      concatMap((documentNodeInsertionPackage: IDocumentNodeCreateDto) => {
+        return this.documentNodesService.insertDocumentNode(documentNodeInsertionPackage).pipe(
+            map((id: string) => new documentsActions.DocumentStructureUpdated(id)),
+            catchError(error => of(new documentsActions.SaveDocumentFail(this.mapError(error))))
+        );
+      })
+  );
+
+  @Effect()
+  deleteDocumentNode$ = this.actions$.pipe(
+    ofType(documentsActions.DocumentsActionTypes.DeleteDocumentNode),
+    map((action: documentsActions.DeleteDocumentNode) => action.payload),
+    concatMap((target: IDocumentNode) => {
+      return this.documentNodesService.deleteDocumentNode(target).pipe(
+          map((id: string) => new documentsActions.DocumentStructureUpdated(id)),
+          catchError(error => of(new documentsActions.SaveDocumentFail(this.mapError(error))))
+      );
+    })
+  );
+
+  @Effect()
+  documentStructureUpdated$ = this.actions$.pipe(
+      ofType(documentsActions.DocumentsActionTypes.DocumentStructureUpdated),
+      map((action: documentsActions.DocumentStructureUpdated) => action.payload),
+      map((id: string) => new documentsActions.LoadDocumentConsolidateByNodeId(id))
+  );
+
   constructor(private store$: Store<CoreState>,
               private actions$: Actions,
               private documentsService: DocumentsService,
+              private documentNodesService: DocumentNodesService,
               private router: Router) {
   }
 

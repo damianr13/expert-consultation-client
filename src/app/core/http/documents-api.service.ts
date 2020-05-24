@@ -22,6 +22,10 @@ export class DocumentsApiService {
     return this.http.get<IDocumentConsolidate>(`${this.url}/${documentId}/consolidated`);
   }
 
+  public getByDocumentNodeId(documentNodeId: string): Observable<IDocumentConsolidate> {
+    return this.http.get<IDocumentConsolidate>(`${this.url}/${documentNodeId}/node`);
+  }
+
   public post(documentMetadata: IDocumentMetadata): Observable<string> {
     return this.http.post<string>(`${this.url}`, documentMetadata);
   }

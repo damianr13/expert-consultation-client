@@ -17,6 +17,9 @@ export class DocumentBreakdownComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.document$.subscribe(d => {
+      console.log('document updated');
+    });
   }
 
   addComment(nodeId) {

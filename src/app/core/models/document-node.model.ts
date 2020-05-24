@@ -45,3 +45,11 @@ export class DocumentNode {
     };
   }
 }
+
+export interface IDocumentNodeCreateDto {
+  parentId: string;
+  documentNodeType: DocumentNodeType;
+  title?: string;
+  content?: string;
+  identifier?: string;
+}

@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DocumentsApiService } from '../http';
-import { DocumentConsolidate, DocumentMetadata, IDocumentConsolidate, IDocumentMetadata, IUser, Page, User } from '../models';
+import {
+  DocumentConsolidate,
+  DocumentMetadata,
+  IDocumentConsolidate,
+  IDocumentMetadata,
+  IUser,
+  Page,
+  User
+} from '../models';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -17,6 +25,11 @@ export class DocumentsService {
 
   public get(documentId: string): Observable<DocumentConsolidate> {
     return this.documentsApiService.get(documentId)
+        .pipe(map((iDocumentConsolidate: IDocumentConsolidate) => new DocumentConsolidate(iDocumentConsolidate)));
+  }
+
+  public getByDocumentNodeId(documentNodeId: string): Observable<DocumentConsolidate> {
+    return this.documentsApiService.getByDocumentNodeId(documentNodeId)
         .pipe(map((iDocumentConsolidate: IDocumentConsolidate) => new DocumentConsolidate(iDocumentConsolidate)));
   }
 

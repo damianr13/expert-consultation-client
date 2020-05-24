@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BaseComponent } from '@app/shared/components/base-component';
-import { DocumentConsolidate, DocumentMetadata, DocumentNode } from '@app/core';
+import { DocumentConsolidate, DocumentMetadata, DocumentNode, DocumentNodeType } from '@app/core';
+import { Store } from '@ngrx/store';
+import { AddDocumentNode, CoreState, DeleteDocumentNode } from '@app/core/store';
 
 
 @Component({
@@ -16,9 +18,19 @@ export class DocumentViewComponent extends BaseComponent implements OnInit {
   documentMetadata: DocumentMetadata;
   editing = false;
 
+  constructor(private store$: Store<CoreState>) {
+    super();
+  }
+
+  get documentNode(): DocumentNode {
+    return this.document.documentNode;
+  }
+
+  get documentMetadata(): DocumentMetadata {
+    return this.document.documentMetadata;
+  }
+
   ngOnInit(): void {
-    this.documentMetadata = this.document.documentMetadata;
-    this.documentNode = this.document.documentNode;
   }
 
   clickedAddComment(nodeId) {
@@ -30,26 +42,33 @@ export class DocumentViewComponent extends BaseComponent implements OnInit {
   }
 
   onAddChapter(parent: DocumentNode) {
-    console.log(`Adding chapter to ${parent.documentNodeType} ${parent.title}`);
+    this.onAddDocumentNodeNode(parent, DocumentNodeType.CHAPTER);
   }
 
   onAddSection(parent: DocumentNode) {
-    console.log(`Adding section to ${parent.documentNodeType} ${parent.title}`);
+    this.onAddDocumentNodeNode(parent, DocumentNodeType.SECTION);
   }
 
   onAddArticle(parent: DocumentNode) {
-    console.log(`Adding article to ${parent.documentNodeType} ${parent.title}`);
+    this.onAddDocumentNodeNode(parent, DocumentNodeType.ARTICLE);
   }
 
   onAddParagraph(parent: DocumentNode) {
-    console.log(`Adding paragraph to ${parent.documentNodeType} ${parent.title}`);
+    this.onAddDocumentNodeNode(parent, DocumentNodeType.PARAGRAPH);
   }
 
   onAddAlignment(parent: DocumentNode) {
-    console.log(`Adding alignment to ${parent.documentNodeType} ${parent.title}`);
+    this.onAddDocumentNodeNode(parent, DocumentNodeType.ALIGNMENT);
   }
 
   onRemoveNode(target: DocumentNode) {
-    console.log(`Removing ${target.documentNodeType} ${target.title}`);
+    this.store$.dispatch(new DeleteDocumentNode(target));
+  }
+
+  onAddDocumentNodeNode(parent: DocumentNode, type: DocumentNodeType) {
+    this.store$.dispatch(new AddDocumentNode({
+      parentId: parent.id,
+      documentNodeType: type
+    }));
   }
 }

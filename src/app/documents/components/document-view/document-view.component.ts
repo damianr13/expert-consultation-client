@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BaseComponent } from '@app/shared/components/base-component';
-import { DocumentConsolidate, DocumentMetadata, DocumentNode, DocumentNodeType } from '@app/core';
+import { DocumentConsolidate, DocumentMetadata, DocumentNode, DocumentNodeType, IDocumentNodeCreateDto } from '@app/core';
 import { Store } from '@ngrx/store';
 import { AddDocumentNode, CoreState, DeleteDocumentNode } from '@app/core/store';
 
@@ -42,33 +42,17 @@ export class DocumentViewComponent extends BaseComponent implements OnInit {
   }
 
   onAddChapter(parent: DocumentNode) {
-    this.onAddDocumentNodeNode(parent, DocumentNodeType.CHAPTER);
-  }
-
-  onAddSection(parent: DocumentNode) {
-    this.onAddDocumentNodeNode(parent, DocumentNodeType.SECTION);
-  }
-
-  onAddArticle(parent: DocumentNode) {
-    this.onAddDocumentNodeNode(parent, DocumentNodeType.ARTICLE);
-  }
-
-  onAddParagraph(parent: DocumentNode) {
-    this.onAddDocumentNodeNode(parent, DocumentNodeType.PARAGRAPH);
-  }
-
-  onAddAlignment(parent: DocumentNode) {
-    this.onAddDocumentNodeNode(parent, DocumentNodeType.ALIGNMENT);
+    this.onAddDocumentNodeNode({
+      parentId: parent.id,
+      documentNodeType: DocumentNodeType.CHAPTER
+    });
   }
 
   onRemoveNode(target: DocumentNode) {
     this.store$.dispatch(new DeleteDocumentNode(target));
   }
 
-  onAddDocumentNodeNode(parent: DocumentNode, type: DocumentNodeType) {
-    this.store$.dispatch(new AddDocumentNode({
-      parentId: parent.id,
-      documentNodeType: type
-    }));
+  onAddDocumentNodeNode(createNodeDto: IDocumentNodeCreateDto) {
+    this.store$.dispatch(new AddDocumentNode(createNodeDto));
   }
 }

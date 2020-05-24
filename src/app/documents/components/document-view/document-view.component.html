@@ -42,10 +42,7 @@
       <h2>{{documentNode.title}}</h2>
       <p>{{documentNode.content}}</p>
       <app-document-content
-        (addSectionEventEmitter)="onAddSection($event)"
-        (addArticleEventEmitter)="onAddArticle($event)"
-        (addParagraphEventEmitter)="onAddParagraph($event)"
-        (addAlignmentEventEmitter)="onAddAlignment($event)"
+        (createNodeEventEmitter)="onAddDocumentNodeNode($event)"
         (removeNodeEventEmitter)="onRemoveNode($event)"
         [editing]="editing"
         [addCommentModeForNode]="addCommentModeForNode"

@@ -14,8 +14,8 @@
             </b>
 
             <app-document-section-editor-buttons
-              (addSectionEventEmitter)="addSectionEventEmitter.emit(documentNode)"
-              (addArticleEventEmitter)="addArticleEventEmitter.emit(documentNode)"
+              (addSectionEventEmitter)="addSection(documentNode)"
+              (addArticleEventEmitter)="addArticle(documentNode)"
               (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
             ></app-document-section-editor-buttons>
           </app-document-viewer-editor>
@@ -29,11 +29,7 @@
           </app-document-viewer-editor>
         </div>
         <app-document-content
-          (addChapterEventEmitter)="addChapterEventEmitter.emit($event)"
-          (addSectionEventEmitter)="addSectionEventEmitter.emit($event)"
-          (addArticleEventEmitter)="addArticleEventEmitter.emit($event)"
-          (addParagraphEventEmitter)="addParagraphEventEmitter.emit($event)"
-          (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit($event)"
+          (createNodeEventEmitter)="createNodeEventEmitter.emit($event)"
           (removeNodeEventEmitter)="removeNodeEventEmitter.emit($event)"
           [editing]="editing"
           [addCommentModeForNode]="addCommentModeForNode"
@@ -52,7 +48,7 @@
             </b>
 
             <app-document-section-editor-buttons
-              (addArticleEventEmitter)="addArticleEventEmitter.emit(documentNode)"
+              (addArticleEventEmitter)="addArticle(documentNode)"
               (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
             ></app-document-section-editor-buttons>
           </app-document-viewer-editor>
@@ -66,11 +62,7 @@
           </app-document-viewer-editor>
         </div>
         <app-document-content
-          (addChapterEventEmitter)="addChapterEventEmitter.emit($event)"
-          (addSectionEventEmitter)="addSectionEventEmitter.emit($event)"
-          (addArticleEventEmitter)="addArticleEventEmitter.emit($event)"
-          (addParagraphEventEmitter)="addParagraphEventEmitter.emit($event)"
-          (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit($event)"
+          (createNodeEventEmitter)="createNodeEventEmitter.emit($event)"
           (removeNodeEventEmitter)="removeNodeEventEmitter.emit($event)"
           [editing]="editing"
           [addCommentModeForNode]="addCommentModeForNode"
@@ -91,7 +83,7 @@
             <p class="article">{{documentNode.content}}</p>
 
             <app-document-section-editor-buttons
-              (addParagraphEventEmitter)="addParagraphEventEmitter.emit(documentNode)"
+              (addParagraphEventEmitter)="addParagraph(documentNode)"
               (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
             ></app-document-section-editor-buttons>
           </app-document-viewer-editor>
@@ -105,11 +97,7 @@
                              [nodeId]="documentNode.id"></app-node-comments>
         </div>
         <app-document-content
-          (addChapterEventEmitter)="addChapterEventEmitter.emit($event)"
-          (addSectionEventEmitter)="addSectionEventEmitter.emit($event)"
-          (addArticleEventEmitter)="addArticleEventEmitter.emit($event)"
-          (addParagraphEventEmitter)="addParagraphEventEmitter.emit($event)"
-          (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit($event)"
+          (createNodeEventEmitter)="createNodeEventEmitter.emit($event)"
           (removeNodeEventEmitter)="removeNodeEventEmitter.emit($event)"
           [editing]="editing"
           [addCommentModeForNode]="addCommentModeForNode"
@@ -123,16 +111,12 @@
           <p class="paragraph">{{'(' + documentNode.identifier + ')' + documentNode.content}}</p>
 
           <app-document-section-editor-buttons
-            (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit(documentNode)"
+            (addAlignmentEventEmitter)="addAlignment(documentNode)"
             (removeCurrentNodeEventEmitter)="removeNodeEventEmitter.emit(documentNode)"
           ></app-document-section-editor-buttons>
         </app-document-viewer-editor>
         <app-document-content
-          (addChapterEventEmitter)="addChapterEventEmitter.emit($event)"
-          (addSectionEventEmitter)="addSectionEventEmitter.emit($event)"
-          (addArticleEventEmitter)="addArticleEventEmitter.emit($event)"
-          (addParagraphEventEmitter)="addParagraphEventEmitter.emit($event)"
-          (addAlignmentEventEmitter)="addAlignmentEventEmitter.emit($event)"
+          (createNodeEventEmitter)="createNodeEventEmitter.emit($event)"
           (removeNodeEventEmitter)="removeNodeEventEmitter.emit($event)"
           [editing]="editing"
           [documentNodes]="documentNode.children"></app-document-content>

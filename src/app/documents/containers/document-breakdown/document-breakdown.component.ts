@@ -10,7 +10,7 @@ import { DocumentConsolidate } from '@app/core';
   templateUrl: './document-breakdown.component.html',
   styleUrls: ['./document-breakdown.component.scss']
 })
-export class DocumentBreakdownComponent implements OnInit {
+export class DocumentBreakdownComponent {
   public document$: Observable<DocumentConsolidate> = this.store.select(fromStore.getDocumentConsolidate);
   public addCommentModeForNode: Map<string, boolean> = new Map();
   constructor(private store: Store<CoreState>) {

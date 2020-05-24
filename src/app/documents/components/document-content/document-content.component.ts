@@ -7,7 +7,7 @@ import { DocumentNode, DocumentNodeType } from '@app/core';
   templateUrl: './document-content.component.html',
   styleUrls: ['./document-content.component.scss']
 })
-export class DocumentContentComponent extends BaseComponent implements OnInit{
+export class DocumentContentComponent extends BaseComponent {
   @Input() documentNodes: DocumentNode[];
   @Input() addCommentModeForNode: Map<string, boolean>;
   @Output() toggleCommentAdding: EventEmitter<string> = new EventEmitter<string>();

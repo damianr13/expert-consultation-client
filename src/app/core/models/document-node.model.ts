@@ -44,6 +44,12 @@ export class DocumentNode {
       children: this.children.map(value => value.toJson())
     };
   }
+
+  displayedInMenu() {
+    return this.documentNodeType === DocumentNodeType.ARTICLE
+        || this.documentNodeType === DocumentNodeType.CHAPTER
+        || this.documentNodeType === DocumentNodeType.SECTION;
+  }
 }
 
 export interface IDocumentNodeCreateDto {

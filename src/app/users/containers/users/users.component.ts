@@ -15,7 +15,7 @@ export class UsersComponent {
   public users$: Observable<User[]> = this.store.pipe(select(fromStore.getUsers));
   public usersPageData$: Observable<PageData> = this.store.pipe(select(fromStore.getUsersPageData));
   public activeView = 'list';
-  private usersLoaded$: Observable<boolean> = this.store.pipe(select(fromStore.getUsersLoaded));
+  public usersLoaded$: Observable<boolean> = this.store.pipe(select(fromStore.getUsersLoaded));
   private filter$: Observable<Filter> = this.store.pipe(select(fromStore.getUsersFilter));
 
   constructor(private store: Store<CoreState>, private router: Router) {

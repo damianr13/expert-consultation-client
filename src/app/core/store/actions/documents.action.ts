@@ -1,5 +1,13 @@
 import { Action } from '@ngrx/store';
-import { IDocumentMetadata, DocumentConsolidate, Page, DocumentMetadata, IDocumentNodeCreateDto, IDocumentNode } from '../../models';
+import {
+  IDocumentMetadata,
+  DocumentConsolidate,
+  Page,
+  DocumentMetadata,
+  IDocumentNodeCreateDto,
+  IDocumentNode,
+  PageRequest
+} from '../../models';
 
 export enum DocumentsActionTypes {
   DocumentStructureUpdated = '[Documents] DocumentStructureUpdated',
@@ -19,6 +27,9 @@ export enum DocumentsActionTypes {
 
 export class LoadDocuments implements Action {
   readonly type = DocumentsActionTypes.LoadDocuments;
+
+  constructor(public payload: PageRequest) {
+  }
 }
 
 export class LoadDocumentsSuccess implements Action {

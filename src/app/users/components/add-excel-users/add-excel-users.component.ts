@@ -12,7 +12,7 @@ export class AddExcelUsersComponent {
   private TAB_OR_SPACE = '[\t ]';
   private GLOBAL_FLAG = 'g';
 
-  private textValue: string;
+  textValue: string;
 
   constructor() {
   }
@@ -21,7 +21,7 @@ export class AddExcelUsersComponent {
     return excel.replace(new RegExp(this.TAB_OR_SPACE, this.GLOBAL_FLAG), ',');
   }
 
-  private submitExcel() {
+  submitExcel() {
     this.save.emit(this.formatExcel(this.textValue));
   }
 }

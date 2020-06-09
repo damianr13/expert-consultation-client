@@ -15,7 +15,7 @@ import { DocumentMetadata } from '@app/core';
 export class AddDocumentComponent extends BaseComponent {
   public document = new DocumentMetadata();
 
-  private filePath$ = this.store$.pipe(select(fromFilePath.selectResult));
+  filePath$ = this.store$.pipe(select(fromFilePath.selectResult));
   private filePath = '';
 
   constructor(private store$: Store<CoreState>) {

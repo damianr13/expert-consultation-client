@@ -5,6 +5,7 @@ import { DocumentsState } from '@app/core/store';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import * as fromStore from '../../core/store';
+import { PageRequest } from '@app/core/models/page-request.model';
 
 @Injectable()
 export class DocumentsGuard implements CanActivate {
@@ -23,7 +24,7 @@ export class DocumentsGuard implements CanActivate {
     return this.store.pipe(select(fromStore.getDocumentsLoaded))
         .pipe(
             tap((loaded) => {
-              this.store.dispatch(new fromStore.LoadDocuments());
+              this.store.dispatch(new fromStore.LoadDocuments(new PageRequest()));
             }),
             take(1)
         );

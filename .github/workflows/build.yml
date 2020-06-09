@@ -22,7 +22,12 @@ jobs:
         run: npm run lint
 
       - name: Build staging
-        run: npm run build:staging
+        run: npm run build:staging -- --prod
+
+      - name: Compress the html, css and js files in dist
+        uses: charlesworth/compress-action@master
+        with:
+          target-directory: 'dist/expert-consultation-client'
 
       - name: Deploy to S3 staging
         if: github.ref == 'refs/heads/develop'
@@ -36,17 +41,17 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: 'dist/expert-consultation-client'
 
-      # - name: Build the Docker image
-      #   if: github.ref == 'refs/heads/develop'
-      #   run: |
-      #     docker build . \
-      #     --file etc/docker/Dockerfile-dev \
-      #     --tag ${{ secrets.ORGANIZATION }}/${{ secrets.REPO }}:latest
+      - name: Build the Docker image
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          docker build . \
+          --file etc/docker/Dockerfile-dev \
+          --tag ${{ secrets.ORGANIZATION }}/${{ secrets.REPO }}:latest
 
-      # - name: Login to docker registry
-      #   if: github.ref == 'refs/heads/develop'
-      #   run: docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
+      - name: Login to docker registry
+        if: github.ref == 'refs/heads/develop'
+        run: docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
 
-      # - name: Push to docker registry
-      #   if: github.ref == 'refs/heads/develop'
-      #   run: docker push ${{ secrets.ORGANIZATION }}/${{ secrets.REPO }}:latest
+      - name: Push to docker registry
+        if: github.ref == 'refs/heads/develop'
+        run: docker push ${{ secrets.ORGANIZATION }}/${{ secrets.REPO }}:latest

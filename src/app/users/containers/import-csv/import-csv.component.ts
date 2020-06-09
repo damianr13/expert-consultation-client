@@ -10,7 +10,7 @@ import { User } from '@app/core';
   styleUrls: ['./import-csv.component.scss']
 })
 export class ImportCsvComponent {
-  private importedUsers$ = this.store.pipe(select(fromStore.getImportUsers));
+  public importedUsers$ = this.store.pipe(select(fromStore.getImportUsers));
 
   constructor(private store: Store<CoreState>) {
   }

@@ -12,7 +12,6 @@ import { AddDocumentNode, CoreState, DeleteDocumentNode } from '@app/core/store'
 })
 export class DocumentViewComponent extends BaseComponent implements OnInit {
   @Input() document: DocumentConsolidate;
-  @Input() addCommentModeForNode: Map<string, boolean>;
   @Output() toggleCommentAdding: EventEmitter<string> = new EventEmitter<string>();
   editing = false;
 

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IDocumentConsolidate, IDocumentMetadata, IUser, Page } from '../models/';
 import { environment } from '@env/environment';
+import { PageRequest } from '@app/core/models/page-request.model';
 
 @Injectable()
 export class DocumentsApiService {
@@ -14,8 +15,12 @@ export class DocumentsApiService {
     return `${environment.api_url}/documents`;
   }
 
-  public list(): Observable<Page<IDocumentMetadata>> {
-    return this.http.get<Page<IDocumentMetadata>>(this.url);
+  public list(pageRequest: PageRequest): Observable<Page<IDocumentMetadata>> {
+    const params = new HttpParams()
+        .set('page', pageRequest.number.toString())
+        .set('size', pageRequest.size.toString());
+
+    return this.http.get<Page<IDocumentMetadata>>(this.url, {params});
   }
 
   public get(documentId: string): Observable<IDocumentConsolidate> {

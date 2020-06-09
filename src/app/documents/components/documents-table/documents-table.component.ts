@@ -11,14 +11,4 @@ export class DocumentsTableComponent extends BaseComponent {
   @Input() documents: DocumentMetadata[];
   @Input() pageData: PageData;
   @Output() rowClick: EventEmitter<string> = new EventEmitter<string>();
-
-  public tableConfig = {
-    displayedColumns: [
-      'name',
-      'date',
-      'type',
-      'initiator',
-      'status'
-    ]
-  };
 }

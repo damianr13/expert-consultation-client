@@ -9,6 +9,7 @@ import { DocumentConsolidate, DocumentMetadata } from '../../models/';
 import { CoreState } from '@app/core/store';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { PageRequest } from '@app/core/models/page-request.model';
 
 @Injectable()
 export class DocumentsEffect {
@@ -16,7 +17,8 @@ export class DocumentsEffect {
   @Effect()
   loadDocuments$ = this.actions$.pipe(
       ofType(documentsActions.DocumentsActionTypes.LoadDocuments),
-      switchMap(() => this.documentsService.list()
+      map((action: documentsActions.LoadDocuments) => action.payload),
+      switchMap((pageRequest: PageRequest) => this.documentsService.list(pageRequest)
           .pipe(
               map((documentsPage: Page<DocumentMetadata>) => new documentsActions.LoadDocumentsSuccess(documentsPage)),
               catchError(error => of(new documentsActions.LoadDocumentsFail(error)))

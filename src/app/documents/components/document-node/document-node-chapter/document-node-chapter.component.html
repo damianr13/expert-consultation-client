@@ -1,8 +1,24 @@
 <div [id]="chapter.id">
-  <strong>
-    {{'document.view.section.type.chapter' | translate | uppercase }}
-    {{chapter.identifier + ': ' + chapter.title}}
-  </strong>
-  <p>{{chapter.content}}</p>
+  <app-document-viewer-editor [editing]="editing"
+                              label="{{'document.view.section.type.chapter' | translate | uppercase }} {{chapter.identifier}}"
+                              [(ngModel)]="chapter.title">
+    <strong>
+      {{'document.view.section.type.chapter' | translate | uppercase }}
+      {{chapter.identifier + ': ' + chapter.title}}
+    </strong>
+
+    <app-document-section-editor-buttons
+      (addSectionEventEmitter)="onAddSection()"
+      (addArticleEventEmitter)="onAddArticle()"
+      (removeCurrentNodeEventEmitter)="onRemoveChapter()">
+    </app-document-section-editor-buttons>
+  </app-document-viewer-editor>
+
+  <app-document-viewer-editor [editing]="editing"
+                              label="{{'document.view.section.type.chapter' | translate | uppercase }}
+                                {{chapter.identifier}}: {{chapter.title}}"
+                              [(ngModel)]="chapter.content">
+    <p>{{chapter.content}}</p>
+  </app-document-viewer-editor>
 </div>
-<app-document-content [documentNodes]="chapter.children"></app-document-content>
+<app-document-content [documentNodes]="chapter.children" [editing]="editing"></app-document-content>

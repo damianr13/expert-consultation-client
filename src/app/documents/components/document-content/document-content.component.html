@@ -2,19 +2,19 @@
   <div *ngFor="let documentNode of documentNodes">
     <div [ngSwitch]="documentNode.documentNodeType">
       <div *ngSwitchCase="documentNodeTypeEnum.CHAPTER">
-        <app-document-node-chapter [chapter]="documentNode"></app-document-node-chapter>
+        <app-document-node-chapter [chapter]="documentNode" [editing]="editing"></app-document-node-chapter>
       </div>
       <div *ngSwitchCase=" documentNodeTypeEnum.SECTION">
-        <app-document-node-section [section]="documentNode"></app-document-node-section>
+        <app-document-node-section [section]="documentNode" [editing]="editing"></app-document-node-section>
       </div>
       <div *ngSwitchCase=" documentNodeTypeEnum.ARTICLE">
-        <app-document-node-article [article]="documentNode"></app-document-node-article>
+        <app-document-node-article [article]="documentNode" [editing]="editing"></app-document-node-article>
       </div>
       <div *ngSwitchCase="documentNodeTypeEnum.PARAGRAPH">
-        <app-document-node-paragraph [paragraph]="documentNode"></app-document-node-paragraph>
+        <app-document-node-paragraph [paragraph]="documentNode" [editing]="editing"></app-document-node-paragraph>
       </div>
       <div *ngSwitchCase="documentNodeTypeEnum.ALIGNMENT">
-        <app-document-node-alignment [alignment]="documentNode"></app-document-node-alignment>
+        <app-document-node-alignment [alignment]="documentNode" [editing]="editing"></app-document-node-alignment>
       </div>
     </div>
   </div>

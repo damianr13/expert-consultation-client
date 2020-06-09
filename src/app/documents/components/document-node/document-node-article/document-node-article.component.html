@@ -1,12 +1,21 @@
 <div [class.bg-lighter]="isExpanded" [class.p-2]="isExpanded">
   <div [id]="article.id">
-    <strong>
-      {{'document.view.section.type.article' | translate}}
-      {{article.identifier}}
-    </strong>
-    <p>{{article.content}}</p>
+    <app-document-viewer-editor [editing]="editing"
+                                label="{{'document.view.section.type.article' | translate | uppercase }} {{article.identifier}}"
+                                [(ngModel)]="article.content">
+      <strong>
+        {{'document.view.section.type.article' | translate}}
+        {{article.identifier}}
+      </strong>
+      <p>{{article.content}}</p>
+
+      <app-document-section-editor-buttons
+        (addArticleEventEmitter)="onAddParagraph()"
+        (removeCurrentNodeEventEmitter)="onRemoveArticle()">
+      </app-document-section-editor-buttons>
+    </app-document-viewer-editor>
   </div>
-  <app-document-content [documentNodes]="article.children"></app-document-content>
+  <app-document-content [documentNodes]="article.children" [editing]="editing"></app-document-content>
   <div class="row justify-content-between mx-0 mt-2 mb-5">
     <div>
       <span (click)="expandComments()" class="comment-link">{{'button.add-comment' | translate}}</span>

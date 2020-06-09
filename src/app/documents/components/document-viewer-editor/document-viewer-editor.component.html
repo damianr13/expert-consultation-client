@@ -1,17 +1,17 @@
 <div class="viewer-editor-panel">
-  <div class="viewer">
+  <div class="viewer" [ngClass]="{'viewer-shrunk': editing}">
     <ng-content></ng-content>
   </div>
 
-  <mat-form-field class="editor" *ngIf="editing">
-    <mat-label>{{label}}</mat-label>
-    <textarea
-      matInput
-      [(ngModel)]="value"
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="1">
-    </textarea>
-  </mat-form-field>
+
+  <div class="editor form-group row" *ngIf="editing">
+    <label class="row form-control-label" for="value">
+      {{label}}
+    </label>
+    <div class="row input-group input-group-alternative input-container">
+      <textarea class="form-control" id="value" type="text" [(ngModel)]="value"></textarea>
+    </div>
+  </div>
 
   <div class="buttons-panel" *ngIf="editing">
     <ng-content select="app-document-section-editor-buttons"></ng-content>

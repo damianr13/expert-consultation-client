@@ -1,2 +1,11 @@
-<p class="mb-0">{{'(' + paragraph.identifier + ')' + ' ' + paragraph.content}}</p>
-<app-document-content [documentNodes]="paragraph.children"></app-document-content>
+<app-document-viewer-editor [editing]="editing"
+                            label="{{'document.view.section.type.paragraph' | translate | uppercase }} {{paragraph.identifier}}"
+                            [(ngModel)]="paragraph.content">
+  <p class="mb-0">{{'(' + paragraph.identifier + ')' + ' ' + paragraph.content}}</p>
+
+  <app-document-section-editor-buttons
+    (addArticleEventEmitter)="onAddAlignment()"
+    (removeCurrentNodeEventEmitter)="onRemoveParagraph()">
+  </app-document-section-editor-buttons>
+</app-document-viewer-editor>
+<app-document-content [documentNodes]="paragraph.children" [editing]="editing"></app-document-content>

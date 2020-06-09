@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DocumentNode } from '@app/core';
+import { DocumentNode, DocumentNodeType } from '@app/core';
 import { DocumentBreakdownStore } from '@app/documents/containers/document-breakdown/document-breakdown.store';
+import { Store } from '@ngrx/store';
+import { AddDocumentNode, CoreState, DeleteDocumentNode } from '@app/core/store';
 
 @Component({
   selector: 'app-document-node-article',
@@ -9,10 +11,23 @@ import { DocumentBreakdownStore } from '@app/documents/containers/document-break
 })
 export class DocumentNodeArticleComponent implements OnInit {
   @Input() article: DocumentNode;
+  @Input() editing: boolean;
 
   public isExpanded = true;
 
-  constructor(private documentBreakdownStore: DocumentBreakdownStore) {
+  constructor(private documentBreakdownStore: DocumentBreakdownStore,
+              private store$: Store<CoreState>) {
+  }
+
+  onAddParagraph() {
+    this.store$.dispatch(new AddDocumentNode({
+      parentId: this.article.id,
+      documentNodeType: DocumentNodeType.PARAGRAPH
+    }));
+  }
+
+  onRemoveArticle() {
+    this.store$.dispatch(new DeleteDocumentNode(this.article));
   }
 
   ngOnInit() {

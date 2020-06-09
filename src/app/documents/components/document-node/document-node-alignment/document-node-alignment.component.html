@@ -1,1 +1,9 @@
-<p class="mb-0">{{alignment.identifier + ')' + '  ' + alignment.content}}</p>
+<app-document-viewer-editor [editing]="editing"
+                            label="{{'document.view.section.type.alignment' | translate | uppercase }} {{alignment.identifier}}"
+                            [(ngModel)]="alignment.content">
+  <p class="mb-0">{{alignment.identifier + ')' + '  ' + alignment.content}}</p>
+
+  <app-document-section-editor-buttons
+    (removeCurrentNodeEventEmitter)="onRemoveAlignment()">
+  </app-document-section-editor-buttons>
+</app-document-viewer-editor>

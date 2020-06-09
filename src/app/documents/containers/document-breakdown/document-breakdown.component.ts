@@ -12,7 +12,7 @@ import { DocumentBreakdownStore } from './document-breakdown.store';
   styleUrls: ['./document-breakdown.component.scss'],
   providers: [DocumentBreakdownStore]
 })
-export class DocumentBreakdownComponent {
+export class DocumentBreakdownComponent implements OnInit {
   public document$: Observable<DocumentConsolidate> = this.store.select(fromStore.getDocumentConsolidate);
   public addCommentModeForNode: Map<string, boolean> = new Map();
 
